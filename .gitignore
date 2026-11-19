@@ -1,24 +1,89 @@
-# Compiled class file
-*.class
+public class TEST {
+}static void main() {
+    Scanner scanner= new Scanner(System.in);
+    int attempts =0;
+    boolean loggedIN=false;
+    while(attempts<3 && !loggedIN) {
+        System.out.println("enter a 4-digit PIN. ");
+        int Pin = scanner.nextInt();
+        if(Pin<1000 || Pin >9999){
+            System.out.println("Pin must be exactly 4 digits . ");
+            continue;
+        }
+        if (Pin == 1234) {
+            loggedIN = true;
+            System.out.println("true");
+        } else {
+            attempts++;
+        }
+    }
+    if(!loggedIN){
 
-# Log file
-*.log
+        System.out.println("Your account has been locked and terminate.");
+        return;
 
-# BlueJ files
-*.ctxt
+    }
+    Scanner input = new Scanner(System.in);
+    double balance = 0;
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+    menuLoop:
+    while (true) {
+        System.out.println("\nMenu Options");
+        System.out.println("1. Check Balance");
+        System.out.println("2. Deposit");
+        System.out.println("3. Withdraw");
+        System.out.println("4. Show Account Status");
+        System.out.println("5. Exit");
+        System.out.print("Choose an option: ");
+        int menu = input.nextInt();
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+        switch (menu) {
+            case 1:
+                System.out.println("Current balance: " + balance);
+                break;
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+            case 2:
+                System.out.print("Enter deposit amount: ");
+                double deposit = input.nextDouble();
+                if (deposit > 0) {
+                    balance += deposit;
+                    System.out.println("Deposit successful.");
+                } else {
+                    System.out.println("Invalid amount.");
+                }
+                break;
+
+            case 3:
+                System.out.print("Enter withdrawal amount: ");
+                double withdraw = input.nextDouble();
+                if (withdraw <= 0) {
+                    System.out.println("Invalid amount.");
+                } else if (withdraw > balance) {
+                    System.out.println("Insufficient balance.");
+                } else {
+                    balance -= withdraw;
+                    System.out.println("Withdrawal successful.");
+                }
+                break;
+
+            case 4:
+                if (balance >= 5000) {
+                    System.out.println("VIP Customer");
+                } else if (balance >= 1000) {
+                    System.out.println("Regular Customer");
+                } else {
+                    System.out.println("Low Balance");
+                }
+                break;
+
+            case 5:
+                System.out.println("Thank you for using our ATM.");
+                break menuLoop;
+
+            default:
+                System.out.println("Invalid option.");
+        }
+    }
+
+    input.close();
+}
